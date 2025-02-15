@@ -1,0 +1,47 @@
+plugins {
+    id 'java'
+    id 'maven-publish'
+    id 'com.jfrog.artifactory' version '5+'
+}
+
+group = 'com.github.yuvraj-2503'
+version = '1.0.0'
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+    maven { url 'https://jitpack.io' }
+}
+
+ext {
+    lombokVersion = '1.18.30'
+    utilVersion = 'v1.0.0-SNAPSHOT'
+}
+
+dependencies {
+    implementation "com.github.yuvraj-2503:util:${utilVersion}"
+    implementation group: 'org.slf4j', name: 'slf4j-api', version: '2.1.0-alpha1'
+    implementation group: 'com.squareup.okhttp3', name: 'okhttp', version: '5.0.0-alpha.14'
+
+    implementation "org.projectlombok:lombok:${lombokVersion}"
+    annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+            groupId = 'com.github.yuvraj-2503'
+            artifactId = 'rest-client'
+            version = '1.0.0'
+        }
+    }
+}
+
+
+test {
+    useJUnitPlatform()
+}

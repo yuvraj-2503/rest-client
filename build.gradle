@@ -10,12 +10,19 @@ version = '1.0.0'
 repositories {
     mavenCentral()
     mavenLocal()
-    maven { url 'https://jitpack.io' }
+    maven {
+        name = "GitLab"
+        url = uri(project.findProperty("gitlab.repo.url"))
+        credentials {
+            username = project.findProperty("gitlab.user")
+            password = project.findProperty("gitlab.key")
+        }
+    }
 }
 
 ext {
     lombokVersion = '1.18.30'
-    utilVersion = 'v1.0.0-SNAPSHOT'
+    utilVersion = '1.0.0'
 }
 
 dependencies {
@@ -39,12 +46,19 @@ publishing {
             version = '1.0.0'
         }
     }
+
+    repositories {
+        mavenLocal()
+        maven {
+            name = "GitLab"
+            url = uri(project.findProperty("gitlab.repo.url"))
+            credentials {
+                username = project.findProperty("gitlab.user")
+                password = project.findProperty("gitlab.key")
+            }
+        }
+    }
 }
-
-
-
-
-
 
 test {
     useJUnitPlatform()
